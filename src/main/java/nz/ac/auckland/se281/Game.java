@@ -26,7 +26,8 @@ public class Game {
     do {
       MessageCli.ASK_INPUT.printMessage();
       userInput = Utils.scanner.nextLine();
-      if (!Utils.isInteger(userInput)) {
+      if (!Utils.isInteger(userInput)
+          || ((Integer.parseInt(userInput) < 0) || (Integer.parseInt(userInput) > 5))) {
         MessageCli.INVALID_INPUT.printMessage();
       } else {
         MessageCli.PRINT_INFO_HAND.printMessage(name, userInput);
