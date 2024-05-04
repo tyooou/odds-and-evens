@@ -1,6 +1,5 @@
 package nz.ac.auckland.se281;
 
-import java.util.Scanner; // Import the Scanner class.
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -8,19 +7,32 @@ import nz.ac.auckland.se281.Main.Difficulty;
 public class Game {
 
   public int rounds;
+  public String name;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     rounds = 0;
-
-    MessageCli.WELCOME_PLAYER.printMessage(options[0]);
+    name = "Valerio";
+    MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
   public void play() {
+
     rounds += 1;
     MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
-    Scanner scanner = new Scanner(System.in);
-    MessageCli.ASK_INPUT.printMessage();
+    String userInput;
+    boolean flag = false;
+
+    do {
+      MessageCli.ASK_INPUT.printMessage();
+      userInput = Utils.scanner.nextLine();
+      if (!Utils.isInteger(userInput)) {
+        MessageCli.INVALID_INPUT.printMessage();
+      } else {
+        MessageCli.PRINT_INFO_HAND.printMessage(name, userInput);
+        flag = true;
+      }
+    } while (!flag);
   }
 
   public void endGame() {}
