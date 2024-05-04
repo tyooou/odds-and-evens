@@ -8,10 +8,12 @@ public class Game {
 
   public int rounds;
   public String name;
+  public Choice choice;
   public AI opponent;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     rounds = 0;
+    this.choice = choice;
     name = options[0];
 
     opponent = AIFactory.createAI(difficulty);
@@ -23,8 +25,8 @@ public class Game {
     rounds += 1;
     MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
-    String userInput;
-    String opponentInput;
+    String userInput, opponentInput;
+    int sum;
     boolean flag = false;
 
     do {
@@ -41,6 +43,19 @@ public class Game {
 
     opponentInput = String.valueOf(opponent.pickFingers());
     MessageCli.PRINT_INFO_HAND.printMessage(AI.name, opponentInput);
+
+    sum = Integer.parseInt(opponentInput) + Integer.parseInt(userInput);
+
+    String winner = name;
+    String polarity = Utils.isEven(Integer.parseInt(userInput)) ? "EVEN" : "ODD";
+
+    if ((Utils.isEven(Integer.parseInt(userInput)) && choice != Choice.EVEN)
+        || (Utils.isOdd(Integer.parseInt(userInput)) && choice != Choice.ODD)) {
+      winner = AI.name;
+    }
+    ;
+
+    MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), polarity, winner);
   }
 
   public void endGame() {}
