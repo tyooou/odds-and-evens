@@ -11,12 +11,11 @@ public class Game {
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     rounds = 0;
-    name = "Valerio";
+    name = options[0];
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
   public void play() {
-
     rounds += 1;
     MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
