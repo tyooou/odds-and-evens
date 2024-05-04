@@ -8,10 +8,14 @@ public class Game {
 
   public int rounds;
   public String name;
+  public AI opponent;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     rounds = 0;
     name = options[0];
+
+    opponent = AIFactory.createAI(difficulty);
+
     MessageCli.WELCOME_PLAYER.printMessage(name);
   }
 
@@ -20,6 +24,7 @@ public class Game {
     MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
     String userInput;
+    String opponentInput;
     boolean flag = false;
 
     do {
@@ -33,6 +38,9 @@ public class Game {
         flag = true;
       }
     } while (!flag);
+
+    opponentInput = String.valueOf(opponent.pickFingers());
+    MessageCli.PRINT_INFO_HAND.printMessage(AI.name, opponentInput);
   }
 
   public void endGame() {}
