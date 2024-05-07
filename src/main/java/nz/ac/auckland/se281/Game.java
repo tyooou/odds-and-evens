@@ -11,6 +11,7 @@ public class Game {
   public String name;
   public String userChoice;
   public AI opponent;
+  public boolean newGameMade = false;
 
   // Initialise game history.
   public List<Integer> choiceHistory = new ArrayList<Integer>();
@@ -18,6 +19,7 @@ public class Game {
   String majority;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
+    newGameMade = true;
     rounds = 0;
     choiceHistory.clear();
     outcomeHistory.clear();
@@ -30,49 +32,55 @@ public class Game {
   }
 
   public void play() {
-    // Initialise round variables;
-    int userInput, opponentInput, sum;
-    String winner = name;
-    boolean swapAI = false;
+    if (newGameMade) {
 
-    // Begin new round.
-    this.rounds += 1;
-    MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
+      // Initialise round variables;
+      int userInput, opponentInput, sum;
+      String winner = name;
+      boolean swapAI = false;
 
-    // Find the majority BEFORE player chooses fingers (as the opponent should not know what the
-    // user has chosen).
-    updateMajority();
+      // Begin new round.
+      this.rounds += 1;
+      MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
-    // Check if the user input is a valid input.
-    userInput = userPickFingers();
+      // Find the majority BEFORE player chooses fingers (as the opponent should not know what the
+      // user has chosen).
+      updateMajority();
 
-    // Find the polarity of the user's amount of fingers (0: EVEN, 1: ODD).
-    int userPolarity = Utils.isEven(userInput) ? 0 : 1;
+      // Check if the user input is a valid input.
+      userInput = userPickFingers();
 
-    // Store the polarity of the user's amount of fingers to the game history.
-    choiceHistory.add(userPolarity);
+      // Find the polarity of the user's amount of fingers (0: EVEN, 1: ODD).
+      int userPolarity = Utils.isEven(userInput) ? 0 : 1;
 
-    // Get and print the opponent's amount of fingers.
-    if (outcomeHistory.size() > 0) {
-      swapAI = outcomeHistory.get(outcomeHistory.size() - 1) == 1 ? true : false;
+      // Store the polarity of the user's amount of fingers to the game history.
+      choiceHistory.add(userPolarity);
+
+      // Get and print the opponent's amount of fingers.
+      if (outcomeHistory.size() > 0) {
+        swapAI = outcomeHistory.get(outcomeHistory.size() - 1) == 1 ? true : false;
+      }
+
+      opponentInput = opponent.pickFingers(rounds, majority, userChoice, swapAI);
+      MessageCli.PRINT_INFO_HAND.printMessage(AI.name, String.valueOf(opponentInput));
+
+      // Find sum of the fingers and its polarity.
+      sum = opponentInput + userInput;
+      String messagePolarity = Utils.isEven(sum) ? "EVEN" : "ODD";
+
+      // Find and print result.
+      if ((Utils.isEven(sum) && userChoice != "EVEN")
+          || (Utils.isOdd(sum) && userChoice != "ODD")) {
+        winner = AI.name;
+      }
+
+      int outcome = winner == name ? 1 : 0;
+      outcomeHistory.add(outcome);
+
+      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), messagePolarity, winner);
+    } else {
+      MessageCli.GAME_NOT_STARTED.printMessage();
     }
-
-    opponentInput = opponent.pickFingers(rounds, majority, userChoice, swapAI);
-    MessageCli.PRINT_INFO_HAND.printMessage(AI.name, String.valueOf(opponentInput));
-
-    // Find sum of the fingers and its polarity.
-    sum = opponentInput + userInput;
-    String messagePolarity = Utils.isEven(sum) ? "EVEN" : "ODD";
-
-    // Find and print result.
-    if ((Utils.isEven(sum) && userChoice != "EVEN") || (Utils.isOdd(sum) && userChoice != "ODD")) {
-      winner = AI.name;
-    }
-
-    int outcome = winner == name ? 1 : 0;
-    outcomeHistory.add(outcome);
-
-    MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), messagePolarity, winner);
   }
 
   // Update the polarity majority of the user's finger selections.
