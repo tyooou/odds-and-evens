@@ -120,7 +120,18 @@ public class Game {
     return Integer.parseInt(userInput);
   }
 
-  public void endGame() {}
+  public void endGame() {
+    if (newGameMade) {
+      newGameMade = false;
+      int userWins = (int) outcomeHistory.stream().filter(item -> item.equals(1)).count();
+      int userLosses = outcomeHistory.size() - userWins;
+
+      showStats();
+
+    } else {
+      MessageCli.GAME_NOT_STARTED.printMessage();
+    }
+  }
 
   public void showStats() {
     if (playing) {
