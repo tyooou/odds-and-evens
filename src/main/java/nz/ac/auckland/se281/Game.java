@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+import java.util.*;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -11,8 +12,13 @@ public class Game {
   public Choice choice;
   public AI opponent;
 
+  // Initialise game history.
+  public List<Integer> gameHistory = new ArrayList<Integer>();
+
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     rounds = 0;
+    gameHistory.clear();
+
     this.choice = choice;
     name = options[0];
 
@@ -22,6 +28,7 @@ public class Game {
   }
 
   public void play() {
+
     rounds += 1;
     MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
@@ -29,6 +36,7 @@ public class Game {
     int sum;
     boolean flag = false;
 
+    // Check if the user input is a valid input.
     do {
       MessageCli.ASK_INPUT.printMessage();
       userInput = Utils.scanner.nextLine();
@@ -41,21 +49,28 @@ public class Game {
       }
     } while (!flag);
 
-    opponentInput = String.valueOf(opponent.pickFingers());
+    // Find the polarity of the user's amount of fingers (0: EVEN, 1: ODD).
+    int userPolarity = Utils.isEven(Integer.parseInt(userInput)) ? 0 : 1;
+
+    // Store the polarity of the user's amount of fingers to the game history.
+    gameHistory.add(userPolarity);
+
+    // Get and print the opponent's amount of fingers.
+    opponentInput = String.valueOf(opponent.pickFingers(rounds, gameHistory));
     MessageCli.PRINT_INFO_HAND.printMessage(AI.name, opponentInput);
 
+    // Find sum of the fingers and its polarity.
     sum = Integer.parseInt(opponentInput) + Integer.parseInt(userInput);
+    String messagePolarity = Utils.isEven(sum) ? "EVEN" : "ODD";
 
     String winner = name;
-    String polarity = Utils.isEven(Integer.parseInt(userInput)) ? "EVEN" : "ODD";
 
-    if ((Utils.isEven(Integer.parseInt(userInput)) && choice != Choice.EVEN)
-        || (Utils.isOdd(Integer.parseInt(userInput)) && choice != Choice.ODD)) {
+    if ((Utils.isEven(sum) && choice != Choice.EVEN)
+        || (Utils.isOdd(sum) && choice != Choice.ODD)) {
       winner = AI.name;
     }
-    ;
 
-    MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), polarity, winner);
+    MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), messagePolarity, winner);
   }
 
   public void endGame() {}
