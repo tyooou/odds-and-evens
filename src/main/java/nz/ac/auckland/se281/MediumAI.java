@@ -1,19 +1,19 @@
 package nz.ac.auckland.se281;
 
-import java.util.List;
-
 public class MediumAI implements AI {
 
   TypeAI type;
+  TypeAI RandomAI = new RandomAI();
+  TypeAI TopAI = new TopAI();
 
   @Override
-  public int pickFingers(int rounds, List<Integer> gameHistory) {
+  public int pickFingers(int rounds, String majority, String userChoice) {
     if (rounds <= 3) {
-      type = new RandomAI();
+      type = RandomAI;
     } else {
-      type = new TopAI();
+      type = TopAI;
     }
 
-    return type.generateValue(gameHistory);
+    return type.generateValue(majority, userChoice);
   }
 }
