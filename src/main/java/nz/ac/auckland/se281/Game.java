@@ -128,6 +128,12 @@ public class Game {
 
       showStats();
 
+      if (userWins > userLosses) {
+        MessageCli.PRINT_END_GAME.printMessage(name);
+      } else {
+        MessageCli.PRINT_END_GAME.printMessage(AI.name);
+      }
+
     } else {
       MessageCli.GAME_NOT_STARTED.printMessage();
     }
