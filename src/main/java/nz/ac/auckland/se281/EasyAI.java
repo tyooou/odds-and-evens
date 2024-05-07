@@ -6,7 +6,7 @@ public class EasyAI implements AI {
   int rounds = 0;
 
   @Override
-  public int pickFingers(int rounds, String majority, String userChoice) {
+  public int pickFingers(int rounds, String majority, String userChoice, boolean swapAI) {
     return type.generateValue(majority, userChoice);
   }
 }
