@@ -12,6 +12,7 @@ public class Game {
   public String userChoice;
   public AI opponent;
   public boolean newGameMade = false;
+  public boolean playing = false;
 
   // Initialise game history.
   public List<Integer> choiceHistory = new ArrayList<Integer>();
@@ -20,6 +21,7 @@ public class Game {
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
     newGameMade = true;
+    playing = false;
     rounds = 0;
     choiceHistory.clear();
     outcomeHistory.clear();
@@ -33,6 +35,7 @@ public class Game {
 
   public void play() {
     if (newGameMade) {
+      playing = true;
 
       // Initialise round variables;
       int userInput, opponentInput, sum;
@@ -119,5 +122,17 @@ public class Game {
 
   public void endGame() {}
 
-  public void showStats() {}
+  public void showStats() {
+    if (playing) {
+      int userWins = (int) outcomeHistory.stream().filter(item -> item.equals(1)).count();
+      int userLosses = outcomeHistory.size() - userWins;
+
+      MessageCli.PRINT_PLAYER_WINS.printMessage(
+          name, String.valueOf(userWins), String.valueOf(userLosses));
+      MessageCli.PRINT_PLAYER_WINS.printMessage(
+          AI.name, String.valueOf(userLosses), String.valueOf(userWins));
+    } else {
+
+    }
+  }
 }
