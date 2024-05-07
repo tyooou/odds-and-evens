@@ -132,7 +132,7 @@ public class Game {
       MessageCli.PRINT_PLAYER_WINS.printMessage(
           AI.name, String.valueOf(userLosses), String.valueOf(userWins));
     } else {
-
+      MessageCli.GAME_NOT_STARTED.printMessage();
     }
   }
 }
