@@ -130,10 +130,11 @@ public class Game {
 
       if (userWins > userLosses) {
         MessageCli.PRINT_END_GAME.printMessage(name);
+      } else if (userWins == userLosses) {
+        MessageCli.PRINT_END_GAME_TIE.printMessage();
       } else {
         MessageCli.PRINT_END_GAME.printMessage(AI.name);
       }
-
     } else {
       MessageCli.GAME_NOT_STARTED.printMessage();
     }
