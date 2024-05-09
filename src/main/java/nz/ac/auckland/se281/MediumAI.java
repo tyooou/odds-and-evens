@@ -2,18 +2,25 @@ package nz.ac.auckland.se281;
 
 public class MediumAI implements AI {
 
-  TypeAI type;
-  TypeAI RandomAI = new RandomAI();
-  TypeAI TopAI = new TopAI();
+  // Initialise AI variables.
+  private TypeAI type;
+  private final TypeAI RANDOM_AI = new RandomAI();
+  private final TypeAI TOP_AI = new TopAI();
 
   @Override
-  public int pickFingers(int rounds, String majority, String userChoice, boolean swapAI) {
+  public int getFingers(GameObject gameObject) {
+
+    // Get game's current round.
+    int rounds = gameObject.getRounds();
+
+    // If the rounds is less than or equal to 3, use RandomAI. Otherwise, use TopAI.
     if (rounds <= 3) {
-      type = RandomAI;
+      type = RANDOM_AI;
     } else {
-      type = TopAI;
+      type = TOP_AI;
     }
 
-    return type.generateValue(majority, userChoice);
+    // Generate value based on AI.
+    return type.generateValue(gameObject);
   }
 }

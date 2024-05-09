@@ -4,6 +4,7 @@ import nz.ac.auckland.se281.Main.Difficulty;
 
 public class AIFactory {
 
+  // Create AI based on difficulty.
   public static AI createAI(Difficulty difficulty) {
 
     switch (difficulty) {

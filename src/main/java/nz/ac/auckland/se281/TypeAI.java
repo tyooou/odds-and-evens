@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
 public interface TypeAI {
-  public int generateValue(String majority, String userChoice);
+
+  // Generate a number.
+  public int generateValue(GameObject gameObject);
 }

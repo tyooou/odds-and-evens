@@ -1,21 +1,38 @@
 package nz.ac.auckland.se281;
 
+import java.util.*;
+
 public class HardAI implements AI {
 
-  TypeAI type;
-  TypeAI RandomAI = new RandomAI();
-  TypeAI TopAI = new TopAI();
+  // Initialise AI variables.
+  private TypeAI type;
+  private final TypeAI RANDOM_AI = new RandomAI();
+  private final TypeAI TOP_AI = new TopAI();
 
   @Override
-  public int pickFingers(int rounds, String majority, String userChoice, boolean swapAI) {
+  public int getFingers(GameObject gameObject) {
+
+    // Get game's current round.
+    int rounds = gameObject.getRounds();
+
+    // If the rounds is less than 3, use RandomAI. Otherwise, swap AI if AI lost last round.
     if (rounds <= 3) {
-      type = RandomAI;
-    } else if (swapAI && type == RandomAI) {
-      type = TopAI;
-    } else if (swapAI && type == TopAI) {
-      type = RandomAI;
+      type = RANDOM_AI;
+    } else {
+
+      List<String> outcomeHistory = gameObject.getOutcomeHistory();
+      boolean swapAI = outcomeHistory.get(outcomeHistory.size() - 1) == "WIN" ? true : false;
+
+      if (swapAI) {
+        if (type == RANDOM_AI) {
+          type = TOP_AI;
+        } else {
+          type = RANDOM_AI;
+        }
+      }
     }
 
-    return type.generateValue(majority, userChoice);
+    // Generate value based on AI.
+    return type.generateValue(gameObject);
   }
 }
