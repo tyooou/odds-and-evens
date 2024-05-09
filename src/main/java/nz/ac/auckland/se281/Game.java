@@ -8,96 +8,95 @@ import nz.ac.auckland.se281.Main.Difficulty;
 public class Game {
 
   public int rounds;
-  public String name;
+  public int userWins, userLosses;
+  public String userName;
   public String userChoice;
+  public String opponentName;
   public AI opponent;
-  public boolean newGameMade = false;
+  public boolean gameActive = false;
   public boolean playing = false;
 
   // Initialise game history.
-  public List<Integer> choiceHistory = new ArrayList<Integer>();
-  public List<Integer> outcomeHistory = new ArrayList<Integer>();
-  String majority;
+  private List<String> choiceHistory = new ArrayList<String>();
+  private List<String> outcomeHistory = new ArrayList<String>();
+  private String majority;
 
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
-    newGameMade = true;
-    playing = false;
-    rounds = 0;
-    choiceHistory.clear();
-    outcomeHistory.clear();
-    userChoice = choice == Choice.EVEN ? "EVEN" : "ODD";
-    name = options[0];
 
-    opponent = AIFactory.createAI(difficulty);
+    // Update state of game.
+    this.gameActive = true;
+    this.playing = false;
 
-    MessageCli.WELCOME_PLAYER.printMessage(name);
+    // Reset game variables.
+    this.rounds = 0;
+    this.choiceHistory.clear();
+    this.outcomeHistory.clear();
+
+    // Update user variables.
+    this.userName = options[0];
+    this.userChoice = choice == Choice.EVEN ? "EVEN" : "ODD";
+    this.opponent = AIFactory.createAI(difficulty);
+    this.opponentName = AI.name;
+
+    // Prompt user with welcome message.
+    MessageCli.WELCOME_PLAYER.printMessage(userName);
   }
 
   public void play() {
-    if (newGameMade) {
-      playing = true;
+    if (gameActive) {
+
+      // Update state of game.
+      this.playing = true;
 
       // Initialise round variables;
-      int userInput, opponentInput, sum;
-      String winner = name;
-      boolean swapAI = false;
+      int userInput, opponentInput;
 
       // Begin new round.
       this.rounds += 1;
       MessageCli.START_ROUND.printMessage(String.valueOf(rounds));
 
-      // Find the majority BEFORE player chooses fingers (as the opponent should not know what the
-      // user has chosen).
+      // Find and update the majority BEFORE player chooses fingers (the opponent should NOT know
+      // the polarity of the user's choice in the current round).
       updateMajority();
 
-      // Check if the user input is a valid input.
+      // Prompt user for a valid input.
       userInput = userPickFingers();
+      updateChoice(userInput);
 
-      // Find the polarity of the user's amount of fingers (0: EVEN, 1: ODD).
-      int userPolarity = Utils.isEven(userInput) ? 0 : 1;
+      opponentInput = opponentPickFingers();
 
-      // Store the polarity of the user's amount of fingers to the game history.
-      choiceHistory.add(userPolarity);
+      int sum = opponentInput + userInput;
+      endRound(sum);
 
-      // Get and print the opponent's amount of fingers.
-      if (outcomeHistory.size() > 0) {
-        swapAI = outcomeHistory.get(outcomeHistory.size() - 1) == 1 ? true : false;
-      }
-
-      opponentInput = opponent.pickFingers(rounds, majority, userChoice, swapAI);
-      MessageCli.PRINT_INFO_HAND.printMessage(AI.name, String.valueOf(opponentInput));
-
-      // Find sum of the fingers and its polarity.
-      sum = opponentInput + userInput;
-      String messagePolarity = Utils.isEven(sum) ? "EVEN" : "ODD";
-
-      // Find and print result.
-      if ((Utils.isEven(sum) && userChoice != "EVEN")
-          || (Utils.isOdd(sum) && userChoice != "ODD")) {
-        winner = AI.name;
-      }
-
-      int outcome = winner == name ? 1 : 0;
-      outcomeHistory.add(outcome);
-
-      MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), messagePolarity, winner);
     } else {
       MessageCli.GAME_NOT_STARTED.printMessage();
     }
   }
 
-  // Update the polarity majority of the user's finger selections.
+  // Update the overall polarity of the user's finger selections.
   public void updateMajority() {
-    int evenCount = (int) choiceHistory.stream().filter(item -> item.equals(0)).count();
-    int length = choiceHistory.size();
+    int evenCount = (int) this.choiceHistory.stream().filter(item -> item.equals("EVEN")).count();
+    int length = this.choiceHistory.size();
 
     if (evenCount > (0.5 * length)) {
-      majority = "EVEN";
+      this.majority = "EVEN";
     } else if (evenCount == (0.5 * length)) {
-      majority = "EQUAL";
+      this.majority = "EQUAL";
     } else {
-      majority = "ODD";
+      this.majority = "ODD";
     }
+  }
+
+  // Update the users wins and losses based on current game.
+  public void updateScore() {
+    this.userWins = (int) outcomeHistory.stream().filter(item -> item.equals("WIN")).count();
+    this.userLosses = outcomeHistory.size() - userWins;
+  }
+
+  // Update the choice history of the user's finger selection.(0: EVEN, 1: ODD)
+  public void updateChoice(int userInput) {
+    String userPolarity = Utils.isEven(userInput) ? "EVEN" : "ODD";
+    this.choiceHistory.add(userPolarity);
   }
 
   // Read and validate user's finger selection.
@@ -106,49 +105,99 @@ public class Game {
     boolean flag = false;
 
     do {
+      // Prompt user for input.
       MessageCli.ASK_INPUT.printMessage();
       userInput = Utils.scanner.nextLine();
+
+      // Validate the user input if it is an integer between 0 and 5.
       if (!Utils.isInteger(userInput)
           || ((Integer.parseInt(userInput) < 0) || (Integer.parseInt(userInput) > 5))) {
+        // Prompt user with error message.
         MessageCli.INVALID_INPUT.printMessage();
       } else {
-        MessageCli.PRINT_INFO_HAND.printMessage(name, userInput);
+        // Prompt user with success message.
+        MessageCli.PRINT_INFO_HAND.printMessage(userName, userInput);
         flag = true;
       }
-    } while (!flag);
+    } while (!flag); // Repeat until user enters valid input.
 
+    // Return the user input.
     return Integer.parseInt(userInput);
   }
 
-  public void endGame() {
-    if (newGameMade) {
-      newGameMade = false;
-      int userWins = (int) outcomeHistory.stream().filter(item -> item.equals(1)).count();
-      int userLosses = outcomeHistory.size() - userWins;
+  public int opponentPickFingers() {
+    boolean swapAI = false;
 
+    // Check the outcome the previous round and decide if the AI type should be swapped.
+    if (this.outcomeHistory.size() > 3) {
+      swapAI = this.outcomeHistory.get(this.outcomeHistory.size() - 1) == "WIN" ? true : false;
+    }
+
+    // Fetch opponent input.
+    int opponentInput =
+        this.opponent.pickFingers(this.rounds, this.majority, this.userChoice, swapAI);
+
+    // Prompt user with success message.
+    MessageCli.PRINT_INFO_HAND.printMessage(this.opponentName, String.valueOf(opponentInput));
+
+    return opponentInput;
+  }
+
+  // Find and prompt with the winner of the found.
+  public void endRound(int sum) {
+    String winner;
+    String outcome;
+
+    String sumPolarity = (Utils.isEven(sum)) ? "EVEN" : "ODD";
+
+    if (sumPolarity == this.userChoice) {
+      winner = userName;
+      outcome = "WIN";
+    } else {
+      winner = opponentName;
+      outcome = "LOST";
+    }
+
+    this.outcomeHistory.add(outcome);
+    MessageCli.PRINT_OUTCOME_ROUND.printMessage(String.valueOf(sum), sumPolarity, winner);
+  }
+
+  // End the game.
+  public void endGame() {
+    // Only allow if in current game.
+    if (gameActive) {
+      gameActive = false;
+
+      // Show stats.
       showStats();
 
+      // Prompt with outcome.
       if (userWins > userLosses) {
-        MessageCli.PRINT_END_GAME.printMessage(name);
+        MessageCli.PRINT_END_GAME.printMessage(userName);
       } else if (userWins == userLosses) {
         MessageCli.PRINT_END_GAME_TIE.printMessage();
       } else {
-        MessageCli.PRINT_END_GAME.printMessage(AI.name);
+        MessageCli.PRINT_END_GAME.printMessage(opponentName);
       }
     } else {
       MessageCli.GAME_NOT_STARTED.printMessage();
     }
   }
 
+  // Show current wins and losses.
   public void showStats() {
     if (playing) {
-      int userWins = (int) outcomeHistory.stream().filter(item -> item.equals(1)).count();
-      int userLosses = outcomeHistory.size() - userWins;
 
+      // Fetch current score;
+      updateScore();
+
+      // Print user wins and losses;
       MessageCli.PRINT_PLAYER_WINS.printMessage(
-          name, String.valueOf(userWins), String.valueOf(userLosses));
+          userName, String.valueOf(userWins), String.valueOf(userLosses));
+
+      // Print opponent's wins and losses.
       MessageCli.PRINT_PLAYER_WINS.printMessage(
-          AI.name, String.valueOf(userLosses), String.valueOf(userWins));
+          opponentName, String.valueOf(userLosses), String.valueOf(userWins));
     } else {
       MessageCli.GAME_NOT_STARTED.printMessage();
     }
