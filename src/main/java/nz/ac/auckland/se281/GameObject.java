@@ -30,7 +30,7 @@ public class GameObject {
     this.userName = options[0];
     this.userChoice = choice == Choice.EVEN ? "EVEN" : "ODD";
     this.opponent = AIFactory.createAI(difficulty);
-    this.opponentName = AI.name;
+    this.opponentName = "HAL-9000";
   }
 
   public String getUserName() {

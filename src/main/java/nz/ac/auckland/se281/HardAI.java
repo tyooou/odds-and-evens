@@ -1,6 +1,6 @@
 package nz.ac.auckland.se281;
 
-import java.util.*;
+import java.util.List;
 
 public class HardAI implements AI {
 
