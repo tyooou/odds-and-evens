@@ -4,8 +4,8 @@ public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private final TypeArtificialIntelligence RANDOM_AI = new RandomArtificialIntelligence();
-  private final TypeArtificialIntelligence TOP_AI = new TopArtificialIntelligence();
+  private final TypeArtificialIntelligence RANDOM = new RandomArtificialIntelligence();
+  private final TypeArtificialIntelligence TOP = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override
@@ -16,9 +16,9 @@ public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
     // If the rounds is less than or equal to 3, use RandomAI. Otherwise, use TopAI.
     if (rounds <= 3) {
-      type = RANDOM_AI;
+      type = RANDOM;
     } else {
-      type = TOP_AI;
+      type = TOP;
     }
 
     // Generate value based on AI.

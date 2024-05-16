@@ -6,8 +6,8 @@ public class HardArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private final TypeArtificialIntelligence RANDOM_AI = new RandomArtificialIntelligence();
-  private final TypeArtificialIntelligence TOP_AI = new TopArtificialIntelligence();
+  private final TypeArtificialIntelligence RANDOM = new RandomArtificialIntelligence();
+  private final TypeArtificialIntelligence TOP = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override
@@ -18,17 +18,17 @@ public class HardArtificialIntelligence implements ArtificialIntelligence {
 
     // If the rounds is less than 3, use RandomAI. Otherwise, swap AI if AI lost last round.
     if (rounds <= 3) {
-      type = RANDOM_AI;
+      type = RANDOM;
     } else {
 
       List<String> outcomeHistory = gameObject.getOutcomeHistory();
-      boolean swapAI = outcomeHistory.get(outcomeHistory.size() - 1) == "WIN" ? true : false;
+      boolean swap = outcomeHistory.get(outcomeHistory.size() - 1) == "WIN" ? true : false;
 
-      if (swapAI) {
-        if (type == RANDOM_AI) {
-          type = TOP_AI;
+      if (swap) {
+        if (type == RANDOM) {
+          type = TOP;
         } else {
-          type = RANDOM_AI;
+          type = RANDOM;
         }
       }
     }
