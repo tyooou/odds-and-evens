@@ -1,6 +1,6 @@
 package nz.ac.auckland.se281;
 
-public class RandomAI implements TypeArtificialIntelligence {
+public class RandomArtificialIntelligence implements TypeArtificialIntelligence {
 
   /** {@inheritDoc} */
   @Override

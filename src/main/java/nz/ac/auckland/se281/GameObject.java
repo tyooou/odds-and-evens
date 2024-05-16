@@ -35,7 +35,7 @@ public class GameObject {
     // Intialise user variables.
     this.userName = options[0];
     this.userChoice = choice == Choice.EVEN ? "EVEN" : "ODD";
-    this.opponent = ArtificialIntelligenceFactory.createAI(difficulty);
+    this.opponent = ArtificialIntelligenceFactory.createArtificialIntelligence(difficulty);
     this.opponentName = "HAL-9000";
   }
 
@@ -56,7 +56,7 @@ public class GameObject {
   /**
    * @return opponent's name as a String.
    */
-  public String getAIName() {
+  public String getOpponentName() {
     return opponentName;
   }
 

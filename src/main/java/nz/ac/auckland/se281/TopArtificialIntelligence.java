@@ -1,6 +1,6 @@
 package nz.ac.auckland.se281;
 
-public class TopAI implements TypeArtificialIntelligence {
+public class TopArtificialIntelligence implements TypeArtificialIntelligence {
 
   /** {@inheritDoc} */
   @Override

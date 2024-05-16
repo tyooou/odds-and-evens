@@ -1,11 +1,11 @@
 package nz.ac.auckland.se281;
 
-public class MediumAI implements ArtificialIntelligence {
+public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private final TypeArtificialIntelligence RANDOM_AI = new RandomAI();
-  private final TypeArtificialIntelligence TOP_AI = new TopAI();
+  private final TypeArtificialIntelligence RANDOM_AI = new RandomArtificialIntelligence();
+  private final TypeArtificialIntelligence TOP_AI = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override

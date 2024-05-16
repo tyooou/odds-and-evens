@@ -32,7 +32,7 @@ public class Game {
 
     // Set global variables.
     this.userName = gameObject.getUserName();
-    this.aiName = gameObject.getAIName();
+    this.aiName = gameObject.getOpponentName();
 
     // Prompt user with welcome message.
     MessageCli.WELCOME_PLAYER.printMessage(userName);

@@ -2,12 +2,12 @@ package nz.ac.auckland.se281;
 
 import java.util.List;
 
-public class HardAI implements ArtificialIntelligence {
+public class HardArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private final TypeArtificialIntelligence RANDOM_AI = new RandomAI();
-  private final TypeArtificialIntelligence TOP_AI = new TopAI();
+  private final TypeArtificialIntelligence RANDOM_AI = new RandomArtificialIntelligence();
+  private final TypeArtificialIntelligence TOP_AI = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override

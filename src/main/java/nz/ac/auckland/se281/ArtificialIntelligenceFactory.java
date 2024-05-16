@@ -11,16 +11,16 @@ public class ArtificialIntelligenceFactory {
    * @param difficulty difficulty of the opponent.
    * @return artificial intelligence of the opponent as a ArtificialIntelligence.
    */
-  public static ArtificialIntelligence createAI(Difficulty difficulty) {
+  public static ArtificialIntelligence createArtificialIntelligence(Difficulty difficulty) {
 
     // Return AI based on inputted difficulty.
     switch (difficulty) {
       case EASY:
-        return new EasyAI();
+        return new EasyArtificialIntelligence();
       case MEDIUM:
-        return new MediumAI();
+        return new MediumArtificialIntelligence();
       case HARD:
-        return new HardAI();
+        return new HardArtificialIntelligence();
 
         // Default to null if difficulty is invalid.
       default:
