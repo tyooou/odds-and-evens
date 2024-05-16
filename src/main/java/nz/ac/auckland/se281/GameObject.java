@@ -21,7 +21,8 @@ public class GameObject {
   private String majority;
 
   /**
-   * Constructor for class GameObject.
+   * Constructor for class GameObject. Ensures that all appropriate variables are reset (e.g. the
+   * previous game, if any, does not affect the current game).
    *
    * @param difficulty difficulty of the opponent.
    * @param choice choice between EVEN or ODD to be.
@@ -40,6 +41,8 @@ public class GameObject {
   }
 
   /**
+   * Get the name of the user.
+   *
    * @return user's name as a String.
    */
   public String getUserName() {
@@ -47,6 +50,8 @@ public class GameObject {
   }
 
   /**
+   * Get the artificial intelligence of the opponent.
+   *
    * @return intelligence of the opponent as an ArtificialIntelligence.
    */
   public ArtificialIntelligence getArtificialIntelligence() {
@@ -54,6 +59,8 @@ public class GameObject {
   }
 
   /**
+   * Get the name of the opponent.
+   *
    * @return opponent's name as a String.
    */
   public String getOpponentName() {
@@ -61,6 +68,8 @@ public class GameObject {
   }
 
   /**
+   * Get current number of rounds.
+   *
    * @return number of the current round as an int.
    */
   public int getRounds() {
@@ -68,6 +77,9 @@ public class GameObject {
   }
 
   /**
+   * Registers the number of round the game object is in. This number is displayed at the start of
+   * every new round creation.
+   *
    * @param rounds number of rounds to set.
    */
   public void setRounds(int rounds) {
@@ -75,6 +87,8 @@ public class GameObject {
   }
 
   /**
+   * Get the majority of the user's history of number of fingers inputs.
+   *
    * @return majority of the user's history of number of fingers inputs as a String.
    */
   public String getMajority() {
@@ -82,6 +96,10 @@ public class GameObject {
   }
 
   /**
+   * Registers the majority of the user's history of number of fingers inputs. This is used by the
+   * HARD difficulty opponent to generate "smarter" numbers of fingers to increase its likelihood of
+   * winning against the user.
+   *
    * @param majority majority of the user's history of number of fingers inputs to be set.
    */
   public void setMajority(String majority) {
@@ -89,13 +107,17 @@ public class GameObject {
   }
 
   /**
-   * @return user's choice of EVEN or ODD at the start of a game as a String.
+   * Get the user's choice of EVEN or ODD, which was set the start of a game.
+   *
+   * @return user's choice of EVEN or ODD (set at the start of a game) as a String.
    */
   public String getChoice() {
     return userChoice;
   }
 
   /**
+   * Get the history of the user's polarity of number of fingers inputs.
+   *
    * @return the history of the user's polarity of number of fingers inputs as a List<String> (i.e.
    *     EVEN or ODD).
    */
@@ -104,6 +126,9 @@ public class GameObject {
   }
 
   /**
+   * Registers the polarity of the user's current number of fingers input to the history. This is
+   * used to find the polarity majority of the user's history of numbers of fingers inputs.
+   *
    * @param polarity polarity of the user's current number of fingers input to add to history.
    */
   public void addChoiceHistory(String polarity) {
@@ -111,6 +136,8 @@ public class GameObject {
   }
 
   /**
+   * Get the user's total number of wins.
+   *
    * @return user's total number of wins as an int.
    */
   public int fetchWins() {
@@ -119,6 +146,8 @@ public class GameObject {
   }
 
   /**
+   * Get the user's total number of losses.
+   *
    * @return user's total number of losses as a int.
    */
   public int fetchLosses() {
@@ -126,6 +155,8 @@ public class GameObject {
   }
 
   /**
+   * Get the win and loss history of the user.
+   *
    * @return the win and loss history of the user as a List<String> (i.e. WIN or LOSS).
    */
   public List<String> getOutcomeHistory() {
@@ -133,6 +164,9 @@ public class GameObject {
   }
 
   /**
+   * Register the outcome of the current round from the perspective of the user. This is used to
+   * find the user's (and subsequently, the opponent's) number of wins and losses.
+   *
    * @param outcome outcome of the current round from the perspective of the user to add to history.
    */
   public void addOutcomeHistory(String outcome) {
