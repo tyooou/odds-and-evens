@@ -5,6 +5,7 @@ public class EasyAI implements ArtificialIntelligence {
   // Initialise AI variables.
   private TypeArtificialIntelligence type = new RandomAI();
 
+  /** {@inheritDoc} */
   @Override
   public int getFingers(GameObject gameObject) {
     // Generate value based on AI.

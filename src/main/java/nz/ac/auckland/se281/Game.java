@@ -13,7 +13,15 @@ public class Game {
   private String userName;
   private String aiName;
 
-  // Create new game.
+  /**
+   * Creates a new game object, replacing the current game object (if any) with the new game object.
+   * Of 16/05/2024, the previous game object is cleared. The status of the program is updated to
+   * reflect that a game is active and the user is welcomed with a message.
+   *
+   * @param difficulty The difficulty of artificial intelligence opponent.
+   * @param choice The user's choice between being EVEN or ODD.
+   * @param options An array of the user's inputted personal details, e.g. name.
+   */
   public void newGame(Difficulty difficulty, Choice choice, String[] options) {
 
     // Update state of game;
@@ -30,7 +38,14 @@ public class Game {
     MessageCli.WELCOME_PLAYER.printMessage(userName);
   }
 
-  // Play a round.
+  /**
+   * If a new game is active, start a new round. In a round, the user and opponent is asked to
+   * select a number of fingers (between 0 and 5 inclusive). If the sum of the user and opponent's
+   * fingers reflects the user's chosen polarity of EVEN or ODD, the user wins, otherwise, they
+   * lose. Note that variables used to generate the opponent's number of fingers (e.g. majority,
+   * wins/losses) is generated BEFORE the user inputs their choice of fingers, as the opponent
+   * should NOT make a decisions based on information including the current round.
+   */
   public void play() {
     // If game is active.
     if (gameActive) {
@@ -55,7 +70,7 @@ public class Game {
       gameObject.addChoiceHistory(userInputPolarity);
 
       // Fetch AI input.
-      aiInput = getAIFingers();
+      aiInput = getArtificialIntelligenceFingers();
 
       // Find sum of inputs and its polarity.
       int sum = aiInput + userInput;
@@ -76,7 +91,11 @@ public class Game {
     }
   }
 
-  // Update the overall polarity of the user's finger selections.
+  /**
+   * Update the overall polarity of the user's history of number of fingers inputs. For example, if
+   * the user has primarily picked even numbers, their majority is EVEN, and vice versa. If the user
+   * has picked a equal ratio of even and odd numbers, their majority is EQUAL.
+   */
   public void updateMajority() {
     // Initialise majority variables.
     List<String> choiceHistory = this.gameObject.getChoiceHistory();
@@ -93,7 +112,13 @@ public class Game {
     }
   }
 
-  // Read and validate user's finger selection.
+  /**
+   * Ask the user to input a number of fingers between 0 and 5 inclusive. If a invalid input is
+   * entered, prompt the user with an error message and ask for another input (this is repeated
+   * until a valid input is entered). After a valid input is entered, a success message is printed.
+   *
+   * @return user's number of fingers input as an integer.
+   */
   public int getUserFingers() {
     String userInput;
     boolean flag = false;
@@ -119,10 +144,15 @@ public class Game {
     return Integer.parseInt(userInput);
   }
 
-  // Fetch AI's finger selection.
-  public int getAIFingers() {
+  /**
+   * Fetch the opponent's input based based on the chosen difficulty of artificial intelligence.
+   * After a valid input is fetched, a success message is printed.
+   *
+   * @return The opponent's number of fingers as an integer.
+   */
+  public int getArtificialIntelligenceFingers() {
     // Fetch AI input.
-    int aiInput = gameObject.getAI().getFingers(gameObject);
+    int aiInput = gameObject.getArtificialIntelligence().getFingers(gameObject);
 
     // Prompt user with success message.
     MessageCli.PRINT_INFO_HAND.printMessage(aiName, String.valueOf(aiInput));
@@ -131,7 +161,10 @@ public class Game {
     return aiInput;
   }
 
-  // End the game.
+  /**
+   * End the current game, only if a game is active. Show stats, find and print the outcome. Update
+   * the status of the program to reflect that a new game is NOT active.
+   */
   public void endGame() {
     // Only allow if in current game.
     if (gameActive) {
@@ -150,7 +183,7 @@ public class Game {
         MessageCli.PRINT_END_GAME.printMessage(aiName);
       }
 
-      // Set state of game to no longer game.
+      // Set state of game to no longer in-game.
       gameActive = false;
 
     } else {
@@ -158,7 +191,10 @@ public class Game {
     }
   }
 
-  // Show current wins and losses.
+  /**
+   * Fetch and show current wins and losses of the user and opponent only if a game is active via a
+   * message.
+   */
   public void showStats() {
     if (gameActive) {
 

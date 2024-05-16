@@ -9,6 +9,7 @@ public class HardAI implements ArtificialIntelligence {
   private final TypeArtificialIntelligence RANDOM_AI = new RandomAI();
   private final TypeArtificialIntelligence TOP_AI = new TopAI();
 
+  /** {@inheritDoc} */
   @Override
   public int getFingers(GameObject gameObject) {
 

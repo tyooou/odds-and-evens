@@ -4,7 +4,13 @@ import nz.ac.auckland.se281.Main.Difficulty;
 
 public class ArtificialIntelligenceFactory {
 
-  // Create AI based on difficulty.
+  /**
+   * Return the artificial intelligence of the opponent based on the user's choice of difficulty for
+   * the active game.
+   *
+   * @param difficulty difficulty of the opponent.
+   * @return artificial intelligence of the opponent as a ArtificialIntelligence.
+   */
   public static ArtificialIntelligence createAI(Difficulty difficulty) {
 
     // Return AI based on inputted difficulty.
