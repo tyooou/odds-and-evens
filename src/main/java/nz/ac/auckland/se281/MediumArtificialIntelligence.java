@@ -8,8 +8,8 @@ public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private TypeArtificialIntelligence random = new RandomArtificialIntelligence();
-  private TypeArtificialIntelligence top = new TopArtificialIntelligence();
+  private final TypeArtificialIntelligence random = new RandomArtificialIntelligence();
+  private final TypeArtificialIntelligence top = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override

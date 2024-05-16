@@ -4,7 +4,7 @@ package nz.ac.auckland.se281;
 public class EasyArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
-  private TypeArtificialIntelligence random = new RandomArtificialIntelligence();
+  private final TypeArtificialIntelligence random = new RandomArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override
