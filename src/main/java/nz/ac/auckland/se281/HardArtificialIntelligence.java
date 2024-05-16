@@ -12,8 +12,8 @@ public class HardArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private final TypeArtificialIntelligence RANDOM = new RandomArtificialIntelligence();
-  private final TypeArtificialIntelligence TOP = new TopArtificialIntelligence();
+  private TypeArtificialIntelligence RANDOM = new RandomArtificialIntelligence();
+  private TypeArtificialIntelligence TOP = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override

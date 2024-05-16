@@ -5,6 +5,7 @@ import java.util.List;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
+/** An object that stores all relevant variables associated with a game. */
 public class GameObject {
 
   // Initialise game variables.
@@ -118,7 +119,7 @@ public class GameObject {
   /**
    * Get the history of the user's polarity of number of fingers inputs (i.e. EVEN or ODD).
    *
-   * @return the history of the user's polarity of number of fingers inputs as a List<String>.
+   * @return the history of the user's polarity of number of fingers inputs as a List of String.
    */
   public List<String> getChoiceHistory() {
     return choiceHistory;
@@ -156,7 +157,7 @@ public class GameObject {
   /**
    * Get the win and loss history of the user (i.e. WIN or LOSS).
    *
-   * @return the win and loss history of the user as a List<String>.
+   * @return the win and loss history of the user as a List of String.
    */
   public List<String> getOutcomeHistory() {
     return outcomeHistory;
