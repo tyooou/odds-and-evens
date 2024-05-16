@@ -24,22 +24,30 @@ public class HardArtificialIntelligence implements ArtificialIntelligence {
 
     // If the rounds is less than 3, use RandomAI. Otherwise, swap AI if AI lost last round.
     if (rounds <= 3) {
-      type = random;
+      setStrategy(random);
     } else {
 
+      // Fetch the outcome history to see if the previous round was won or lost.
       List<String> outcomeHistory = gameObject.getOutcomeHistory();
       boolean swap = outcomeHistory.get(outcomeHistory.size() - 1) == "WIN" ? true : false;
 
+      // Swap AIs.
       if (swap) {
         if (type == random) {
-          type = top;
+          setStrategy(top);
         } else {
-          type = random;
+          setStrategy(random);
         }
       }
     }
 
     // Generate value based on AI.
     return type.generateValue(gameObject);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setStrategy(TypeArtificialIntelligence type) {
+    this.type = type;
   }
 }

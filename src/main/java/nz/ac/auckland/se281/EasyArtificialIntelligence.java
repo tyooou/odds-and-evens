@@ -4,12 +4,18 @@ package nz.ac.auckland.se281;
 public class EasyArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
-  private final TypeArtificialIntelligence random = new RandomArtificialIntelligence();
+  private TypeArtificialIntelligence type = new RandomArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override
   public int getFingers(GameObject gameObject) {
     // Generate value based on AI.
-    return random.generateValue(gameObject);
+    return type.generateValue(gameObject);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setStrategy(TypeArtificialIntelligence type) {
+    this.type = type;
   }
 }

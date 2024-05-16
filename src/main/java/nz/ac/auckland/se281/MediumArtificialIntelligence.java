@@ -8,8 +8,8 @@ public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.
   private TypeArtificialIntelligence type;
-  private final TypeArtificialIntelligence random = new RandomArtificialIntelligence();
-  private final TypeArtificialIntelligence top = new TopArtificialIntelligence();
+  private TypeArtificialIntelligence random = new RandomArtificialIntelligence();
+  private TypeArtificialIntelligence top = new TopArtificialIntelligence();
 
   /** {@inheritDoc} */
   @Override
@@ -20,12 +20,18 @@ public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
     // If the rounds is less than or equal to 3, use RandomAI. Otherwise, use TopAI.
     if (rounds <= 3) {
-      type = random;
+      setStrategy(random);
     } else {
-      type = top;
+      setStrategy(top);
     }
 
     // Generate value based on AI.
     return type.generateValue(gameObject);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setStrategy(TypeArtificialIntelligence type) {
+    this.type = type;
   }
 }

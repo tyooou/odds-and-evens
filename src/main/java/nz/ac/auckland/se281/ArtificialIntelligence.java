@@ -15,4 +15,7 @@ public interface ArtificialIntelligence {
    *     information from the active game.
    */
   public int getFingers(GameObject gameObject);
+
+  /** Registers the type of artificial intelligence to be used by the opponent (RANDOM or TOP). */
+  public void setStrategy(TypeArtificialIntelligence type);
 }
