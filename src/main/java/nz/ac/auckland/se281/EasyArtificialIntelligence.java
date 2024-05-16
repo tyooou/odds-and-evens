@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+/** The EASY AI will always use the RANDOM strategy until the game ends. */
 public class EasyArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.

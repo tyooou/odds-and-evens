@@ -1,5 +1,9 @@
 package nz.ac.auckland.se281;
 
+/**
+ * For the first three rounds, the MEDIUM AI will use the RANDOM strategy, and then for the fourth
+ * round onwards the HARD AI will switch to the TOP strategy until the current game ends.
+ */
 public class MediumArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.

@@ -1,5 +1,9 @@
 package nz.ac.auckland.se281;
 
+/**
+ * Gets a number of fingers chosen by the opponent based on its artificial intelligence and
+ * information from the active game.
+ */
 public interface ArtificialIntelligence {
 
   /**

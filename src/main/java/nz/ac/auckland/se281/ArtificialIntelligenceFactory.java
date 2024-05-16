@@ -2,6 +2,10 @@ package nz.ac.auckland.se281;
 
 import nz.ac.auckland.se281.Main.Difficulty;
 
+/**
+ * Creates an artificially intelligent opponent based on the user's choice of difficulty for the
+ * active game.
+ */
 public class ArtificialIntelligenceFactory {
 
   /**

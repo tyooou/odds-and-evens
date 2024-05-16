@@ -2,6 +2,12 @@ package nz.ac.auckland.se281;
 
 import java.util.List;
 
+/**
+ * For the first three rounds, the HARD AI will use the RANDOM strategy, and then for the fourth
+ * round onwards the HARD AI will switch strategy if the current strategy lost in the previous
+ * round, otherwise, the current strategy is kept. The TOP strategy will consider the whole history
+ * from round one.
+ */
 public class HardArtificialIntelligence implements ArtificialIntelligence {
 
   // Initialise AI variables.

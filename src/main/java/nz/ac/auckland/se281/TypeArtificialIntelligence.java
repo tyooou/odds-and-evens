@@ -1,5 +1,10 @@
 package nz.ac.auckland.se281;
 
+/**
+ * Interface for all artificial intelligence types, such as RandomArtificialIntelligence and
+ * TopArtificialIntelligence. They all must generate a value, representing the number of fingers
+ * chosen by the opponent.
+ */
 public interface TypeArtificialIntelligence {
 
   /**

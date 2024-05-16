@@ -1,5 +1,9 @@
 package nz.ac.auckland.se281;
 
+/**
+ * The RANDOM strategy generates a random integer between 0 and 5 inclusive, regardless of the
+ * user's previous inputs.
+ */
 public class RandomArtificialIntelligence implements TypeArtificialIntelligence {
 
   /** {@inheritDoc} */
