@@ -15,7 +15,7 @@ package nz.ac.auckland.se281;
       Choice: ODD, Input: EVEN ---- EVEN + EVEN = EVEN.
 */
 
-public class TopAI implements TypeAI {
+public class TopAI implements TypeArtificialIntelligence {
 
   @Override
   public int generateValue(GameObject gameObject) {

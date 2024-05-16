@@ -1,9 +1,9 @@
 package nz.ac.auckland.se281;
 
-public class EasyAI implements AI {
+public class EasyAI implements ArtificialIntelligence {
 
   // Initialise AI variables.
-  private TypeAI type = new RandomAI();
+  private TypeArtificialIntelligence type = new RandomAI();
 
   @Override
   public int getFingers(GameObject gameObject) {

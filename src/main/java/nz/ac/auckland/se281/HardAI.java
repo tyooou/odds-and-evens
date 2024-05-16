@@ -2,12 +2,12 @@ package nz.ac.auckland.se281;
 
 import java.util.List;
 
-public class HardAI implements AI {
+public class HardAI implements ArtificialIntelligence {
 
   // Initialise AI variables.
-  private TypeAI type;
-  private final TypeAI RANDOM_AI = new RandomAI();
-  private final TypeAI TOP_AI = new TopAI();
+  private TypeArtificialIntelligence type;
+  private final TypeArtificialIntelligence RANDOM_AI = new RandomAI();
+  private final TypeArtificialIntelligence TOP_AI = new TopAI();
 
   @Override
   public int getFingers(GameObject gameObject) {

@@ -1,6 +1,6 @@
 package nz.ac.auckland.se281;
 
-import java.util.*;
+import java.util.List;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -36,7 +36,8 @@ public class Game {
     if (gameActive) {
 
       // Initialise round variables;
-      int userInput, aiInput;
+      int userInput;
+      int aiInput;
 
       // Begin new round.
       int round = gameObject.getRounds() + 1;
@@ -135,7 +136,6 @@ public class Game {
     // Only allow if in current game.
     if (gameActive) {
 
-      // Show stats.
       showStats();
 
       int userWins = gameObject.fetchWins();

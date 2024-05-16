@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import nz.ac.auckland.se281.Main.Choice;
 import nz.ac.auckland.se281.Main.Difficulty;
 
@@ -12,7 +13,7 @@ public class GameObject {
   private String userName;
   private String userChoice;
   private String opponentName;
-  private AI opponent;
+  private ArtificialIntelligence opponent;
 
   // Initialise game history.
   private List<String> choiceHistory = new ArrayList<String>();
@@ -29,7 +30,7 @@ public class GameObject {
     // Intialise user variables.
     this.userName = options[0];
     this.userChoice = choice == Choice.EVEN ? "EVEN" : "ODD";
-    this.opponent = AIFactory.createAI(difficulty);
+    this.opponent = ArtificialIntelligenceFactory.createAI(difficulty);
     this.opponentName = "HAL-9000";
   }
 
@@ -37,7 +38,7 @@ public class GameObject {
     return userName;
   }
 
-  public AI getAI() {
+  public ArtificialIntelligence getAI() {
     return opponent;
   }
 
